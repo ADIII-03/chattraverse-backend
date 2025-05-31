@@ -10,44 +10,36 @@ const streamClient = StreamChat.getInstance(apiKey, apiSecret);
 
 export const upsertStreamUser = async (userData) => {
   try {
-    const userDataWithRole = {
-      ...userData,
-      role: 'user',
-      permissions: ['ReadChannel']
-    };
-
-    await streamClient.upsertUser(userDataWithRole);
-
-    const userId = userData._id
-      ? userData._id.toString()
-      : userData.id
-      ? userData.id.toString()
-      : null;
-
+    // Extract user ID safely
+    const userId = userData._id?.toString() || userData.id?.toString();
     if (!userId) {
       throw new Error('User ID is missing in upsertStreamUser');
     }
 
-    await streamClient.updateUserRoles({
-      userId,
-      roles: ['user'],
-      channelRole: 'channel_member',
-      channelType: 'messaging'
-    });
+    // Prepare user info with role
+    const userToUpsert = {
+      id: userId,
+      name: userData.name || userData.fullName || '',
+      image: userData.image || userData.profilePic || '',
+      email: userData.email || '',
+      role: 'user', // or 'admin' if you want
+    };
 
-    return userDataWithRole;
+    // Upsert the user
+    await streamClient.upsertUser(userToUpsert);
+
+    return userToUpsert;
   } catch (error) {
     console.log('error upserting user', error);
     throw error;
   }
 };
 
-
 export const generateStreamToken = (id) => {
-    try {
-        return streamClient.createToken(id.toString());
-    } catch (error) {
-        console.error("error generating stream token", error);
-        throw error;
-    }
+  try {
+    return streamClient.createToken(id.toString());
+  } catch (error) {
+    console.error("error generating stream token", error);
+    throw error;
+  }
 };
