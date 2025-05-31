@@ -16,7 +16,7 @@ connectDB();
 
 app.use(
   cors({
-  origin: ["http://localhost:5173", "https://chatrraverse-frontend-git-main-aditya-ramans-projects.vercel.app/"], // ✅ no trailing slash
+  origin: ["http://localhost:5173", "https://chatrraverse-frontend-git-main-aditya-ramans-projects.vercel.app"], // ✅ no trailing slash
   credentials: true,
 })
 
