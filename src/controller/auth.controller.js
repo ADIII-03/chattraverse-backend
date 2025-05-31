@@ -52,6 +52,18 @@ res.cookie('accessToken', token, {
   sameSite: 'None', // 'Strict' for same origin, 'None' for cross-site (needed for frontend on different domain)
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
 });
+      
+      res.status(201).json({
+  success: true,
+  user: {
+    _id: newUser._id,
+    email: newUser.email,
+    fullName: newUser.fullName,
+    profilePic: newUser.profilePic,
+    isOnBoarded: newUser.isOnBoarded
+  }
+});
+
 
 
    } catch (error) {
