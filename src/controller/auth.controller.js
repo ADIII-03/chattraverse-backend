@@ -41,14 +41,13 @@ try {
 }
 
 const token = jwt.sign({userId:newUser._id},process.env.JWT_SECRET,{expiresIn:"7d"});
-await newUser.save();
- res.cookie("token", token, {
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-      path: "/",
-    });
+res.cookie('accessToken', token, {
+  httpOnly: true,
+  secure: true, // use false for local testing (http)
+  sameSite: 'None', // 'Strict' for same origin, 'None' for cross-site (needed for frontend on different domain)
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+});
+
 
    } catch (error) {
     console.log(error);
