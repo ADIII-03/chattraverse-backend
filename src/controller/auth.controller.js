@@ -31,7 +31,7 @@ const newUser = await User.create({
   password,
   profilePic: randomAvatar
 });
-console.log('New user created:', newUser);
+// console.log('New user created:', newUser);
       if (!newUser?._id) {
   console.error('User creation failed or missing _id');
 }
