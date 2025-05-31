@@ -86,10 +86,16 @@ export async  function login(req,res){
     }
 };
 
-export function logout(req,res){
-    res.clearCookie("token", { domain: "localhost", path: "/" });
-    res.status(200).json({success : true})
-};
+export function logout(req, res) {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+        path: "/",
+    });
+    res.status(200).json({ success: true });
+}
+
 
 export async function onboard(req,res){
     try {
