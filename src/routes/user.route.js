@@ -1,7 +1,6 @@
 import express from "express" ;
 import { protectRoute } from "../middleware/auth.middleware.js";
 import { getRecommendedUsers, getMyFriends , sendFriendRequest, acceptFriendRequest, getFriendRequests, getOutgoingFriendReqs, searchUsers} from "../controller/user.controller.js";
-import { send } from "process";
 
 const router = express.Router()
 
