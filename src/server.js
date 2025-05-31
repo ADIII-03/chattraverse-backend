@@ -16,7 +16,8 @@ connectDB();
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "https://chatrraverse-frontend.vercel.app",
+    origin: process.env.CLIENT_URL ? process.env.CLIENT_URL.replace(/\/$/, '') : "https://chatrraverse-frontend.vercel.app",
+
     credentials: true, // allow cookies
   })
 );
