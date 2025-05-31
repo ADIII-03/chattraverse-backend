@@ -135,7 +135,7 @@ try {
     image:updatedUser.profilePic || "",
     email:updatedUser.email
 })
-console.log(`Stream user updated for : ${updatedUser.fullName}`);
+// console.log(`Stream user updated for : ${updatedUser.fullName}`);
 } catch (error) {
     console.log("error updating stream user", error);
 }
