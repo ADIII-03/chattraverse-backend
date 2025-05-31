@@ -8,7 +8,6 @@ const router = express.Router()
 
 router.get("/me",protectRoute, (req, res) => {
   // This route is used to get the authenticated user's details
-   console.log("Cookies received:", req.cookies);
   res.status(200).json({ user: req.user });
 });
 
