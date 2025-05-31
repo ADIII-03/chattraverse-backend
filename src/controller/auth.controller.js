@@ -25,13 +25,18 @@ if(existingUser){
 const idx = Math.floor(Math.random()*100)+1;
 const randomAvatar = `https://robohash.org/${idx}.png`;
 
-const newUser = await  User.create({
-    email,
-    fullName,
-    password,
-    profilePic:randomAvatar
+const newUser = await User.create({
+  email,
+  fullName,
+  password,
+  profilePic: randomAvatar
+});
+console.log('New user created:', newUser);
+      if (!newUser?._id) {
+  console.error('User creation failed or missing _id');
+}
 
-})
+
 
 try {
     await upsertStreamUser({id:newUser._id.toString(),name:newUser.fullName,image:newUser.profilePic || "",email:newUser.email});
