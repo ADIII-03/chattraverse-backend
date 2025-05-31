@@ -9,26 +9,39 @@ if (!apiKey || !apiSecret) throw new Error("Missing Stream API key or secret");
 const streamClient = StreamChat.getInstance(apiKey, apiSecret);
 
 export const upsertStreamUser = async (userData) => {
-    try {
-        const userDataWithRole = {
-            ...userData,
-            role: 'user',
-            permissions: ['ReadChannel']
-        };
+  try {
+    const userDataWithRole = {
+      ...userData,
+      role: 'user',
+      permissions: ['ReadChannel']
+    };
 
-        await streamClient.upsertUser(userDataWithRole);
-        await streamClient.updateUserRoles({
-            userId: userData._id.toString(),
-            roles: ['user'],
-            channelRole: 'channel_member',
-            channelType: 'messaging'
-        });
-        return userDataWithRole;
-    } catch (error) {
-        console.log("error upserting user", error);
-        throw error;
+    await streamClient.upsertUser(userDataWithRole);
+
+    const userId = userData._id
+      ? userData._id.toString()
+      : userData.id
+      ? userData.id.toString()
+      : null;
+
+    if (!userId) {
+      throw new Error('User ID is missing in upsertStreamUser');
     }
+
+    await streamClient.updateUserRoles({
+      userId,
+      roles: ['user'],
+      channelRole: 'channel_member',
+      channelType: 'messaging'
+    });
+
+    return userDataWithRole;
+  } catch (error) {
+    console.log('error upserting user', error);
+    throw error;
+  }
 };
+
 
 export const generateStreamToken = (id) => {
     try {
