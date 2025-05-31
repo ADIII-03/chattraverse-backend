@@ -40,7 +40,7 @@ console.log('New user created:', newUser);
 
 try {
     await upsertStreamUser({id:newUser._id.toString(),name:newUser.fullName,image:newUser.profilePic || "",email:newUser.email});
-    console.log(`Stream user created for : ${newUser.fullName}`);
+    // console.log(`Stream user created for : ${newUser.fullName}`);
 } catch (error) {
     console.log("error creating stream user", error);
 }
