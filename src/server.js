@@ -16,10 +16,10 @@ connectDB();
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL ? process.env.CLIENT_URL.replace(/\/$/, '') : "https://chatrraverse-frontend.vercel.app",
+  origin: ["http://localhost:5173", "https://chatrraverse-frontend.vercel.app"], // ✅ no trailing slash
+  credentials: true,
+})
 
-    credentials: true, // allow cookies
-  })
 );
 
 app.use(express.json());
