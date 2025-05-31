@@ -42,12 +42,13 @@ try {
 
 const token = jwt.sign({userId:newUser._id},process.env.JWT_SECRET,{expiresIn:"7d"});
 await newUser.save();
-res.cookie("token",token,{
-    maxAge:7*24*60*60*1000,
-    httpOnly:true,
-    secure:process.env.NODE_ENV === "production",
-    sameSite:"strict"});
-res.status(201).json({user : newUser , success : true});
+ res.cookie("token", token, {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      path: "/",
+    });
 
    } catch (error) {
     console.log(error);
